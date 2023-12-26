@@ -1,0 +1,816 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AJNMRecetasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="IdCategoria" />
+          </Key>
+          <Property Name="IdCategoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ingrediente">
+          <Key>
+            <PropertyRef Name="IdIngrediente" />
+          </Key>
+          <Property Name="IdIngrediente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdPais" Type="int" />
+          <Property Name="Imagen" Type="varchar(max)" />
+          <Property Name="IdCategoria" Type="int" />
+        </EntityType>
+        <EntityType Name="Pais">
+          <Key>
+            <PropertyRef Name="IdPais" />
+          </Key>
+          <Property Name="IdPais" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Receta">
+          <Key>
+            <PropertyRef Name="IdReceta" />
+          </Key>
+          <Property Name="IdReceta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="IdIngrediente" Type="int" />
+          <Property Name="IdPais" Type="int" />
+          <Property Name="Imagen" Type="varchar(max)" />
+          <Property Name="Porcion" Type="int" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'AJNMRecetas.dbo.RecetaIngrediente' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="RecetaIngrediente">
+          <Property Name="IdReceta" Type="int" />
+          <Property Name="IdIngrediente" Type="int" />
+        </EntityType>-->
+        <EntityType Name="Restaurante">
+          <Key>
+            <PropertyRef Name="IdRestaurante" />
+          </Key>
+          <Property Name="IdRestaurante" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Imagen" Type="varchar(max)" />
+          <Property Name="Dirección" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Calificacion" Type="int" />
+          <Property Name="IdPais" Type="int" />
+          <Property Name="IdReceta" Type="int" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'AJNMRecetas.dbo.RestauranteReceta' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="RestauranteReceta">
+          <Property Name="IdRestaurante" Type="int" />
+          <Property Name="IdReceta" Type="int" />
+        </EntityType>-->
+        <Association Name="FK__Ingredien__IdCat__1A14E395">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="0..1" />
+          <End Role="Ingrediente" Type="Self.Ingrediente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="IdCategoria" />
+            </Principal>
+            <Dependent Role="Ingrediente">
+              <PropertyRef Name="IdCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ingredien__IdPai__1B0907CE">
+          <End Role="Pais" Type="Self.Pais" Multiplicity="0..1" />
+          <End Role="Ingrediente" Type="Self.Ingrediente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pais">
+              <PropertyRef Name="IdPais" />
+            </Principal>
+            <Dependent Role="Ingrediente">
+              <PropertyRef Name="IdPais" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Receta__IdIngred__1BFD2C07">
+          <End Role="Ingrediente" Type="Self.Ingrediente" Multiplicity="0..1" />
+          <End Role="Receta" Type="Self.Receta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingrediente">
+              <PropertyRef Name="IdIngrediente" />
+            </Principal>
+            <Dependent Role="Receta">
+              <PropertyRef Name="IdIngrediente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Receta__IdPais__1CF15040">
+          <End Role="Pais" Type="Self.Pais" Multiplicity="0..1" />
+          <End Role="Receta" Type="Self.Receta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pais">
+              <PropertyRef Name="IdPais" />
+            </Principal>
+            <Dependent Role="Receta">
+              <PropertyRef Name="IdPais" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errores durante la generación:
+error 6004: Una relación hace referencia a la tabla 'AJNMRecetas.dbo.RecetaIngrediente', pero no se encuentra la tabla.
+        <Association Name="FK__RecetaIng__IdIng__1DE57479" />-->
+        <!--Errores durante la generación:
+error 6004: Una relación hace referencia a la tabla 'AJNMRecetas.dbo.RecetaIngrediente', pero no se encuentra la tabla.
+        <Association Name="FK__RecetaIng__IdRec__1ED998B2" />-->
+        <Association Name="FK__Restauran__IdPai__1FCDBCEB">
+          <End Role="Pais" Type="Self.Pais" Multiplicity="0..1" />
+          <End Role="Restaurante" Type="Self.Restaurante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pais">
+              <PropertyRef Name="IdPais" />
+            </Principal>
+            <Dependent Role="Restaurante">
+              <PropertyRef Name="IdPais" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Restauran__IdRec__20C1E124">
+          <End Role="Receta" Type="Self.Receta" Multiplicity="0..1" />
+          <End Role="Restaurante" Type="Self.Restaurante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receta">
+              <PropertyRef Name="IdReceta" />
+            </Principal>
+            <Dependent Role="Restaurante">
+              <PropertyRef Name="IdReceta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errores durante la generación:
+error 6004: Una relación hace referencia a la tabla 'AJNMRecetas.dbo.RestauranteReceta', pero no se encuentra la tabla.
+        <Association Name="FK__Restauran__IdRec__21B6055D" />-->
+        <!--Errores durante la generación:
+error 6004: Una relación hace referencia a la tabla 'AJNMRecetas.dbo.RestauranteReceta', pero no se encuentra la tabla.
+        <Association Name="FK__Restauran__IdRes__22AA2996" />-->
+        <Function Name="CategoriaGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="IngredienteDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdIngrediente" Type="int" Mode="In" />
+        </Function>
+        <Function Name="IngredienteGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="IngredienteGetById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdIngrediente" Type="int" Mode="In" />
+        </Function>
+        <Function Name="IngredientesAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="IdPais" Type="int" Mode="In" />
+          <Parameter Name="Imagen" Type="varchar(max)" Mode="In" />
+          <Parameter Name="IdCategoria" Type="int" Mode="In" />
+        </Function>
+        <Function Name="IngredienteUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdIngrediente" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="IdPais" Type="int" Mode="In" />
+          <Parameter Name="Imagen" Type="varchar(max)" Mode="In" />
+          <Parameter Name="IdCategoria" Type="int" Mode="In" />
+        </Function>
+        <Function Name="PaisGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="RecetaAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Descripcion" Type="varchar" Mode="In" />
+          <Parameter Name="IdPais" Type="int" Mode="In" />
+          <Parameter Name="Imagen" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Porcion" Type="int" Mode="In" />
+        </Function>
+        <Function Name="RecetaDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdReceta" Type="int" Mode="In" />
+        </Function>
+        <Function Name="RecetaGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Pais" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="RecetaGetById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdReceta" Type="int" Mode="In" />
+        </Function>
+        <Function Name="RecetaIngredientesGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdReceta" Type="int" Mode="In" />
+        </Function>
+        <Function Name="RecetaUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdReceta" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Descripcion" Type="varchar" Mode="In" />
+          <Parameter Name="IdPais" Type="int" Mode="In" />
+          <Parameter Name="Imagen" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Porcion" Type="int" Mode="In" />
+        </Function>
+        <Function Name="RestauranteAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Imagen" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Direccion" Type="varchar" Mode="In" />
+          <Parameter Name="Calificacion" Type="int" Mode="In" />
+          <Parameter Name="IdPais" Type="int" Mode="In" />
+        </Function>
+        <Function Name="RestauranteDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdRestaurante" Type="int" Mode="In" />
+        </Function>
+        <Function Name="RestauranteGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Pais" Type="varchar" Mode="In" />
+          <Parameter Name="Receta" Type="varchar" Mode="In" />
+          <Parameter Name="Calificacion" Type="int" Mode="In" />
+        </Function>
+        <Function Name="RestauranteGetByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdRestaurante" Type="int" Mode="In" />
+        </Function>
+        <Function Name="RestauranteRecetaGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdRestaurante" Type="int" Mode="In" />
+        </Function>
+        <Function Name="RestauranteUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdRestaurante" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Imagen" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Direccion" Type="varchar" Mode="In" />
+          <Parameter Name="Calificacion" Type="int" Mode="In" />
+          <Parameter Name="IdPais" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="AJNMRecetasModelStoreContainer">
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ingrediente" EntityType="Self.Ingrediente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pais" EntityType="Self.Pais" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Receta" EntityType="Self.Receta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Restaurante" EntityType="Self.Restaurante" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Ingredien__IdCat__1A14E395" Association="Self.FK__Ingredien__IdCat__1A14E395">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Ingrediente" EntitySet="Ingrediente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ingredien__IdPai__1B0907CE" Association="Self.FK__Ingredien__IdPai__1B0907CE">
+            <End Role="Pais" EntitySet="Pais" />
+            <End Role="Ingrediente" EntitySet="Ingrediente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Receta__IdIngred__1BFD2C07" Association="Self.FK__Receta__IdIngred__1BFD2C07">
+            <End Role="Ingrediente" EntitySet="Ingrediente" />
+            <End Role="Receta" EntitySet="Receta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Receta__IdPais__1CF15040" Association="Self.FK__Receta__IdPais__1CF15040">
+            <End Role="Pais" EntitySet="Pais" />
+            <End Role="Receta" EntitySet="Receta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Restauran__IdPai__1FCDBCEB" Association="Self.FK__Restauran__IdPai__1FCDBCEB">
+            <End Role="Pais" EntitySet="Pais" />
+            <End Role="Restaurante" EntitySet="Restaurante" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Restauran__IdRec__20C1E124" Association="Self.FK__Restauran__IdRec__20C1E124">
+            <End Role="Receta" EntitySet="Receta" />
+            <End Role="Restaurante" EntitySet="Restaurante" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AJNMRecetasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="IdCategoria" />
+          </Key>
+          <Property Name="IdCategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Ingredientes" Relationship="Self.FK__Ingredien__IdCat__1A14E395" FromRole="Categoria" ToRole="Ingrediente" />
+        </EntityType>
+        <EntityType Name="Ingrediente">
+          <Key>
+            <PropertyRef Name="IdIngrediente" />
+          </Key>
+          <Property Name="IdIngrediente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdPais" Type="Int32" />
+          <Property Name="Imagen" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdCategoria" Type="Int32" />
+          <NavigationProperty Name="Categoria" Relationship="Self.FK__Ingredien__IdCat__1A14E395" FromRole="Ingrediente" ToRole="Categoria" />
+          <NavigationProperty Name="Pai" Relationship="Self.FK__Ingredien__IdPai__1B0907CE" FromRole="Ingrediente" ToRole="Pais" />
+          <NavigationProperty Name="Recetas" Relationship="Self.FK__Receta__IdIngred__1BFD2C07" FromRole="Ingrediente" ToRole="Receta" />
+        </EntityType>
+        <EntityType Name="Pai">
+          <Key>
+            <PropertyRef Name="IdPais" />
+          </Key>
+          <Property Name="IdPais" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Ingredientes" Relationship="Self.FK__Ingredien__IdPai__1B0907CE" FromRole="Pais" ToRole="Ingrediente" />
+          <NavigationProperty Name="Recetas" Relationship="Self.FK__Receta__IdPais__1CF15040" FromRole="Pais" ToRole="Receta" />
+          <NavigationProperty Name="Restaurantes" Relationship="Self.FK__Restauran__IdPai__1FCDBCEB" FromRole="Pais" ToRole="Restaurante" />
+        </EntityType>
+        <EntityType Name="Receta">
+          <Key>
+            <PropertyRef Name="IdReceta" />
+          </Key>
+          <Property Name="IdReceta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdIngrediente" Type="Int32" />
+          <Property Name="IdPais" Type="Int32" />
+          <Property Name="Imagen" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Porcion" Type="Int32" />
+          <NavigationProperty Name="Ingrediente" Relationship="Self.FK__Receta__IdIngred__1BFD2C07" FromRole="Receta" ToRole="Ingrediente" />
+          <NavigationProperty Name="Pai" Relationship="Self.FK__Receta__IdPais__1CF15040" FromRole="Receta" ToRole="Pais" />
+          <NavigationProperty Name="Restaurantes" Relationship="Self.FK__Restauran__IdRec__20C1E124" FromRole="Receta" ToRole="Restaurante" />
+        </EntityType>
+        <EntityType Name="Restaurante">
+          <Key>
+            <PropertyRef Name="IdRestaurante" />
+          </Key>
+          <Property Name="IdRestaurante" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Imagen" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Dirección" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Calificacion" Type="Int32" />
+          <Property Name="IdPais" Type="Int32" />
+          <Property Name="IdReceta" Type="Int32" />
+          <NavigationProperty Name="Pai" Relationship="Self.FK__Restauran__IdPai__1FCDBCEB" FromRole="Restaurante" ToRole="Pais" />
+          <NavigationProperty Name="Receta" Relationship="Self.FK__Restauran__IdRec__20C1E124" FromRole="Restaurante" ToRole="Receta" />
+        </EntityType>
+        <Association Name="FK__Ingredien__IdCat__1A14E395">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="0..1" />
+          <End Role="Ingrediente" Type="Self.Ingrediente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="IdCategoria" />
+            </Principal>
+            <Dependent Role="Ingrediente">
+              <PropertyRef Name="IdCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ingredien__IdPai__1B0907CE">
+          <End Role="Pais" Type="Self.Pai" Multiplicity="0..1" />
+          <End Role="Ingrediente" Type="Self.Ingrediente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pais">
+              <PropertyRef Name="IdPais" />
+            </Principal>
+            <Dependent Role="Ingrediente">
+              <PropertyRef Name="IdPais" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Receta__IdIngred__1BFD2C07">
+          <End Role="Ingrediente" Type="Self.Ingrediente" Multiplicity="0..1" />
+          <End Role="Receta" Type="Self.Receta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingrediente">
+              <PropertyRef Name="IdIngrediente" />
+            </Principal>
+            <Dependent Role="Receta">
+              <PropertyRef Name="IdIngrediente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Receta__IdPais__1CF15040">
+          <End Role="Pais" Type="Self.Pai" Multiplicity="0..1" />
+          <End Role="Receta" Type="Self.Receta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pais">
+              <PropertyRef Name="IdPais" />
+            </Principal>
+            <Dependent Role="Receta">
+              <PropertyRef Name="IdPais" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Restauran__IdPai__1FCDBCEB">
+          <End Role="Pais" Type="Self.Pai" Multiplicity="0..1" />
+          <End Role="Restaurante" Type="Self.Restaurante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pais">
+              <PropertyRef Name="IdPais" />
+            </Principal>
+            <Dependent Role="Restaurante">
+              <PropertyRef Name="IdPais" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Restauran__IdRec__20C1E124">
+          <End Role="Receta" Type="Self.Receta" Multiplicity="0..1" />
+          <End Role="Restaurante" Type="Self.Restaurante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receta">
+              <PropertyRef Name="IdReceta" />
+            </Principal>
+            <Dependent Role="Restaurante">
+              <PropertyRef Name="IdReceta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AJNMRecetasEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categorias" EntityType="Self.Categoria" />
+          <EntitySet Name="Ingredientes" EntityType="Self.Ingrediente" />
+          <EntitySet Name="Pais" EntityType="Self.Pai" />
+          <EntitySet Name="Recetas" EntityType="Self.Receta" />
+          <EntitySet Name="Restaurantes" EntityType="Self.Restaurante" />
+          <AssociationSet Name="FK__Ingredien__IdCat__1A14E395" Association="Self.FK__Ingredien__IdCat__1A14E395">
+            <End Role="Categoria" EntitySet="Categorias" />
+            <End Role="Ingrediente" EntitySet="Ingredientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ingredien__IdPai__1B0907CE" Association="Self.FK__Ingredien__IdPai__1B0907CE">
+            <End Role="Pais" EntitySet="Pais" />
+            <End Role="Ingrediente" EntitySet="Ingredientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Receta__IdIngred__1BFD2C07" Association="Self.FK__Receta__IdIngred__1BFD2C07">
+            <End Role="Ingrediente" EntitySet="Ingredientes" />
+            <End Role="Receta" EntitySet="Recetas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Receta__IdPais__1CF15040" Association="Self.FK__Receta__IdPais__1CF15040">
+            <End Role="Pais" EntitySet="Pais" />
+            <End Role="Receta" EntitySet="Recetas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Restauran__IdPai__1FCDBCEB" Association="Self.FK__Restauran__IdPai__1FCDBCEB">
+            <End Role="Pais" EntitySet="Pais" />
+            <End Role="Restaurante" EntitySet="Restaurantes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Restauran__IdRec__20C1E124" Association="Self.FK__Restauran__IdRec__20C1E124">
+            <End Role="Receta" EntitySet="Recetas" />
+            <End Role="Restaurante" EntitySet="Restaurantes" />
+          </AssociationSet>
+          <FunctionImport Name="CategoriaGetAll" ReturnType="Collection(AJNMRecetasModel.CategoriaGetAll_Result)" />
+          <FunctionImport Name="IngredienteDelete">
+            <Parameter Name="IdIngrediente" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="IngredienteGetAll" ReturnType="Collection(AJNMRecetasModel.IngredienteGetAll_Result)">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="IngredienteGetById" ReturnType="Collection(AJNMRecetasModel.IngredienteGetById_Result)">
+            <Parameter Name="IdIngrediente" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="IngredientesAdd">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="IdPais" Mode="In" Type="Int32" />
+            <Parameter Name="Imagen" Mode="In" Type="String" />
+            <Parameter Name="IdCategoria" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="IngredienteUpdate">
+            <Parameter Name="IdIngrediente" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="IdPais" Mode="In" Type="Int32" />
+            <Parameter Name="Imagen" Mode="In" Type="String" />
+            <Parameter Name="IdCategoria" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PaisGetAll" ReturnType="Collection(AJNMRecetasModel.PaisGetAll_Result)" />
+          <FunctionImport Name="RecetaAdd">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Descripcion" Mode="In" Type="String" />
+            <Parameter Name="IdPais" Mode="In" Type="Int32" />
+            <Parameter Name="Imagen" Mode="In" Type="String" />
+            <Parameter Name="Porcion" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="RecetaDelete">
+            <Parameter Name="IdReceta" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="RecetaGetAll" ReturnType="Collection(AJNMRecetasModel.RecetaGetAll_Result)">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Pais" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="RecetaGetById" ReturnType="Collection(AJNMRecetasModel.RecetaGetById_Result)">
+            <Parameter Name="IdReceta" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="RecetaIngredientesGetAll" ReturnType="Collection(AJNMRecetasModel.RecetaIngredientesGetAll_Result)">
+            <Parameter Name="IdReceta" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="RecetaUpdate">
+            <Parameter Name="IdReceta" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Descripcion" Mode="In" Type="String" />
+            <Parameter Name="IdPais" Mode="In" Type="Int32" />
+            <Parameter Name="Imagen" Mode="In" Type="String" />
+            <Parameter Name="Porcion" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="RestauranteAdd">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Imagen" Mode="In" Type="String" />
+            <Parameter Name="Direccion" Mode="In" Type="String" />
+            <Parameter Name="Calificacion" Mode="In" Type="Int32" />
+            <Parameter Name="IdPais" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="RestauranteDelete">
+            <Parameter Name="IdRestaurante" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="RestauranteGetAll" ReturnType="Collection(AJNMRecetasModel.RestauranteGetAll_Result)">
+            <Parameter Name="Pais" Mode="In" Type="String" />
+            <Parameter Name="Receta" Mode="In" Type="String" />
+            <Parameter Name="Calificacion" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="RestauranteGetByID" ReturnType="Collection(AJNMRecetasModel.RestauranteGetByID_Result)">
+            <Parameter Name="IdRestaurante" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="RestauranteRecetaGetAll" ReturnType="Collection(AJNMRecetasModel.RestauranteRecetaGetAll_Result)">
+            <Parameter Name="IdRestaurante" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="RestauranteUpdate">
+            <Parameter Name="IdRestaurante" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Imagen" Mode="In" Type="String" />
+            <Parameter Name="Direccion" Mode="In" Type="String" />
+            <Parameter Name="Calificacion" Mode="In" Type="Int32" />
+            <Parameter Name="IdPais" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="CategoriaGetAll_Result">
+          <Property Type="Int32" Name="IdCategoria" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="IngredienteGetAll_Result">
+          <Property Type="Int32" Name="IdIngrediente" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="IdPais" Nullable="true" />
+          <Property Type="String" Name="Imagen" Nullable="true" />
+          <Property Type="Int32" Name="IdCategoria" Nullable="true" />
+          <Property Type="String" Name="NombrePais" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="NombreCategoria" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="IngredienteGetById_Result">
+          <Property Type="Int32" Name="IdIngrediente" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="IdPais" Nullable="true" />
+          <Property Type="String" Name="Imagen" Nullable="true" />
+          <Property Type="Int32" Name="IdCategoria" Nullable="true" />
+          <Property Type="String" Name="NombrePais" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="NombreCategoria" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="PaisGetAll_Result">
+          <Property Type="Int32" Name="IdPais" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="RecetaGetAll_Result">
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="250" />
+          <Property Type="Int32" Name="IdPais" Nullable="true" />
+          <Property Type="String" Name="Imagen" Nullable="true" />
+          <Property Type="Int32" Name="Porcion" Nullable="true" />
+          <Property Type="String" Name="PaisNombre" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="RecetaGetById_Result">
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="250" />
+          <Property Type="Int32" Name="IdPais" Nullable="true" />
+          <Property Type="String" Name="Imagen" Nullable="true" />
+          <Property Type="Int32" Name="Porcion" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="RecetaIngredientesGetAll_Result">
+          <Property Type="Int32" Name="IdReceta" Nullable="true" />
+          <Property Type="Int32" Name="IdIngrediente" Nullable="true" />
+          <Property Type="String" Name="RecetaNombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="RecetaImagen" Nullable="true" />
+          <Property Type="Int32" Name="Porcion" Nullable="true" />
+          <Property Type="String" Name="IngredienteNombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ImagenIngrediente" Nullable="true" />
+          <Property Type="Int32" Name="IdPais" Nullable="true" />
+          <Property Type="Int32" Name="IdCategoria" Nullable="true" />
+          <Property Type="String" Name="NombrePais" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="NombreCategoria" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="RestauranteGetAll_Result">
+          <Property Type="Int32" Name="IdReceta" Nullable="true" />
+          <Property Type="Int32" Name="IdRestaurante" Nullable="true" />
+          <Property Type="Int32" Name="IdPais" Nullable="true" />
+          <Property Type="String" Name="PaisNombre" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="Calificacion" Nullable="true" />
+          <Property Type="String" Name="NombreReceta" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="RestauranteGetByID_Result">
+          <Property Type="Int32" Name="IdRestaurante" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Imagen" Nullable="true" />
+          <Property Type="String" Name="Dirección" Nullable="false" MaxLength="250" />
+          <Property Type="Int32" Name="Calificacion" Nullable="true" />
+          <Property Type="Int32" Name="IdPais" Nullable="true" />
+          <Property Type="String" Name="PaisNombre" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="RestauranteRecetaGetAll_Result">
+          <Property Type="Int32" Name="IdReceta" Nullable="true" />
+          <Property Type="Int32" Name="IdRestaurante" Nullable="true" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="250" />
+          <Property Type="Int32" Name="Porcion" Nullable="true" />
+          <Property Type="String" Name="RecetaImagen" Nullable="true" />
+          <Property Type="Int32" Name="IdPais" Nullable="true" />
+          <Property Type="String" Name="PaisNombre" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Dirección" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="ImagenRestaurante" Nullable="true" />
+          <Property Type="String" Name="RestauranteNombre" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="Calificacion" Nullable="true" />
+          <Property Type="String" Name="NombreReceta" Nullable="false" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AJNMRecetasModelStoreContainer" CdmEntityContainer="AJNMRecetasEntities">
+          <EntitySetMapping Name="Categorias">
+            <EntityTypeMapping TypeName="AJNMRecetasModel.Categoria">
+              <MappingFragment StoreEntitySet="Categoria">
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ingredientes">
+            <EntityTypeMapping TypeName="AJNMRecetasModel.Ingrediente">
+              <MappingFragment StoreEntitySet="Ingrediente">
+                <ScalarProperty Name="IdIngrediente" ColumnName="IdIngrediente" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pais">
+            <EntityTypeMapping TypeName="AJNMRecetasModel.Pai">
+              <MappingFragment StoreEntitySet="Pais">
+                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recetas">
+            <EntityTypeMapping TypeName="AJNMRecetasModel.Receta">
+              <MappingFragment StoreEntitySet="Receta">
+                <ScalarProperty Name="IdReceta" ColumnName="IdReceta" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdIngrediente" ColumnName="IdIngrediente" />
+                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="Porcion" ColumnName="Porcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Restaurantes">
+            <EntityTypeMapping TypeName="AJNMRecetasModel.Restaurante">
+              <MappingFragment StoreEntitySet="Restaurante">
+                <ScalarProperty Name="IdRestaurante" ColumnName="IdRestaurante" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="Dirección" ColumnName="Dirección" />
+                <ScalarProperty Name="Calificacion" ColumnName="Calificacion" />
+                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+                <ScalarProperty Name="IdReceta" ColumnName="IdReceta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="CategoriaGetAll" FunctionName="AJNMRecetasModel.Store.CategoriaGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AJNMRecetasModel.CategoriaGetAll_Result">
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="IngredienteDelete" FunctionName="AJNMRecetasModel.Store.IngredienteDelete" />
+          <FunctionImportMapping FunctionImportName="IngredienteGetAll" FunctionName="AJNMRecetasModel.Store.IngredienteGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AJNMRecetasModel.IngredienteGetAll_Result">
+                <ScalarProperty Name="IdIngrediente" ColumnName="IdIngrediente" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="NombrePais" ColumnName="NombrePais" />
+                <ScalarProperty Name="NombreCategoria" ColumnName="NombreCategoria" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="IngredienteGetById" FunctionName="AJNMRecetasModel.Store.IngredienteGetById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AJNMRecetasModel.IngredienteGetById_Result">
+                <ScalarProperty Name="IdIngrediente" ColumnName="IdIngrediente" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="NombrePais" ColumnName="NombrePais" />
+                <ScalarProperty Name="NombreCategoria" ColumnName="NombreCategoria" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="IngredientesAdd" FunctionName="AJNMRecetasModel.Store.IngredientesAdd" />
+          <FunctionImportMapping FunctionImportName="IngredienteUpdate" FunctionName="AJNMRecetasModel.Store.IngredienteUpdate" />
+          <FunctionImportMapping FunctionImportName="PaisGetAll" FunctionName="AJNMRecetasModel.Store.PaisGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AJNMRecetasModel.PaisGetAll_Result">
+                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RecetaAdd" FunctionName="AJNMRecetasModel.Store.RecetaAdd" />
+          <FunctionImportMapping FunctionImportName="RecetaDelete" FunctionName="AJNMRecetasModel.Store.RecetaDelete" />
+          <FunctionImportMapping FunctionImportName="RecetaGetAll" FunctionName="AJNMRecetasModel.Store.RecetaGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AJNMRecetasModel.RecetaGetAll_Result">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="Porcion" ColumnName="Porcion" />
+                <ScalarProperty Name="PaisNombre" ColumnName="PaisNombre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RecetaGetById" FunctionName="AJNMRecetasModel.Store.RecetaGetById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AJNMRecetasModel.RecetaGetById_Result">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="Porcion" ColumnName="Porcion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RecetaIngredientesGetAll" FunctionName="AJNMRecetasModel.Store.RecetaIngredientesGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AJNMRecetasModel.RecetaIngredientesGetAll_Result">
+                <ScalarProperty Name="IdReceta" ColumnName="IdReceta" />
+                <ScalarProperty Name="IdIngrediente" ColumnName="IdIngrediente" />
+                <ScalarProperty Name="RecetaNombre" ColumnName="RecetaNombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="RecetaImagen" ColumnName="RecetaImagen" />
+                <ScalarProperty Name="Porcion" ColumnName="Porcion" />
+                <ScalarProperty Name="IngredienteNombre" ColumnName="IngredienteNombre" />
+                <ScalarProperty Name="ImagenIngrediente" ColumnName="ImagenIngrediente" />
+                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="NombrePais" ColumnName="NombrePais" />
+                <ScalarProperty Name="NombreCategoria" ColumnName="NombreCategoria" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RecetaUpdate" FunctionName="AJNMRecetasModel.Store.RecetaUpdate" />
+          <FunctionImportMapping FunctionImportName="RestauranteAdd" FunctionName="AJNMRecetasModel.Store.RestauranteAdd" />
+          <FunctionImportMapping FunctionImportName="RestauranteDelete" FunctionName="AJNMRecetasModel.Store.RestauranteDelete" />
+          <FunctionImportMapping FunctionImportName="RestauranteGetAll" FunctionName="AJNMRecetasModel.Store.RestauranteGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AJNMRecetasModel.RestauranteGetAll_Result">
+                <ScalarProperty Name="IdReceta" ColumnName="IdReceta" />
+                <ScalarProperty Name="IdRestaurante" ColumnName="IdRestaurante" />
+                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+                <ScalarProperty Name="PaisNombre" ColumnName="PaisNombre" />
+                <ScalarProperty Name="Calificacion" ColumnName="Calificacion" />
+                <ScalarProperty Name="NombreReceta" ColumnName="NombreReceta" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RestauranteGetByID" FunctionName="AJNMRecetasModel.Store.RestauranteGetByID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AJNMRecetasModel.RestauranteGetByID_Result">
+                <ScalarProperty Name="IdRestaurante" ColumnName="IdRestaurante" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="Dirección" ColumnName="Dirección" />
+                <ScalarProperty Name="Calificacion" ColumnName="Calificacion" />
+                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+                <ScalarProperty Name="PaisNombre" ColumnName="PaisNombre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RestauranteRecetaGetAll" FunctionName="AJNMRecetasModel.Store.RestauranteRecetaGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AJNMRecetasModel.RestauranteRecetaGetAll_Result">
+                <ScalarProperty Name="IdReceta" ColumnName="IdReceta" />
+                <ScalarProperty Name="IdRestaurante" ColumnName="IdRestaurante" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Porcion" ColumnName="Porcion" />
+                <ScalarProperty Name="RecetaImagen" ColumnName="RecetaImagen" />
+                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+                <ScalarProperty Name="PaisNombre" ColumnName="PaisNombre" />
+                <ScalarProperty Name="Dirección" ColumnName="Dirección" />
+                <ScalarProperty Name="ImagenRestaurante" ColumnName="ImagenRestaurante" />
+                <ScalarProperty Name="RestauranteNombre" ColumnName="RestauranteNombre" />
+                <ScalarProperty Name="Calificacion" ColumnName="Calificacion" />
+                <ScalarProperty Name="NombreReceta" ColumnName="NombreReceta" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RestauranteUpdate" FunctionName="AJNMRecetasModel.Store.RestauranteUpdate" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

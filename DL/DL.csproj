@@ -43,6 +43,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,12 +53,94 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AJNMRecetas.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AJNMRecetas.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AJNMRecetas.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AJNMRecetas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AJNMRecetas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AJNMRecetas.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Categoria.cs">
+      <DependentUpon>AJNMRecetas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CategoriaGetAll_Result.cs">
+      <DependentUpon>AJNMRecetas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Class1.cs" />
+    <Compile Include="Ingrediente.cs">
+      <DependentUpon>AJNMRecetas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IngredienteGetAll_Result.cs">
+      <DependentUpon>AJNMRecetas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IngredienteGetById_Result.cs">
+      <DependentUpon>AJNMRecetas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Pai.cs">
+      <DependentUpon>AJNMRecetas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PaisGetAll_Result.cs">
+      <DependentUpon>AJNMRecetas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Receta.cs">
+      <DependentUpon>AJNMRecetas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RecetaGetAll_Result.cs">
+      <DependentUpon>AJNMRecetas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RecetaGetById_Result.cs">
+      <DependentUpon>AJNMRecetas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RecetaIngredientesGetAll_Result.cs">
+      <DependentUpon>AJNMRecetas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Restaurante.cs">
+      <DependentUpon>AJNMRecetas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RestauranteGetAll_Result.cs">
+      <DependentUpon>AJNMRecetas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RestauranteGetByID_Result.cs">
+      <DependentUpon>AJNMRecetas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RestauranteRecetaGetAll_Result.cs">
+      <DependentUpon>AJNMRecetas.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EntityDeploy Include="AJNMRecetas.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AJNMRecetas.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="AJNMRecetas.edmx.diagram">
+      <DependentUpon>AJNMRecetas.edmx</DependentUpon>
+    </None>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AJNMRecetas.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AJNMRecetas.edmx</DependentUpon>
+      <LastGenOutput>AJNMRecetas.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="AJNMRecetas.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AJNMRecetas.edmx</DependentUpon>
+      <LastGenOutput>AJNMRecetas.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
