@@ -51,9 +51,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Categoria.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="Ingrediente.cs" />
+    <Compile Include="Pais.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Receta.cs" />
+    <Compile Include="Restaurante.cs" />
+    <Compile Include="RecetaIngrediente.cs" />
+    <Compile Include="RestauranteReceta.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
