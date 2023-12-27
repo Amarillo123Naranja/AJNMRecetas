@@ -8,7 +8,7 @@ using System.Web.Http;
 namespace SL.Controllers
 {
 
-    [RoutePrefix("pais")]  
+    [RoutePrefix("api/pais")]  
     public class PaisController : ApiController
     {
 
@@ -28,12 +28,7 @@ namespace SL.Controllers
                 return Content(HttpStatusCode.BadRequest, resultado);   
             }
 
-
         }
-
-
-
-
 
     }
 }
