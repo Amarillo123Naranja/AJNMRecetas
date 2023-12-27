@@ -165,6 +165,7 @@
     <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PaisController.cs" />
+    <Compile Include="Controllers\RecetaIngredienteController.cs" />
     <Compile Include="Controllers\RestauranteRecetaController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">

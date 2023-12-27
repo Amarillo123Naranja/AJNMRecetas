@@ -7,13 +7,12 @@ using System.Web.Http;
 
 namespace SL.Controllers
 {
-    [RoutePrefix("categoria")]
+    [RoutePrefix("api/categoria")]
     public class CategoriaController : ApiController
     {
 
         [Route("getall")]
         [HttpGet]
-
         public IHttpActionResult GetAll()
         {
 
