@@ -13,14 +13,14 @@ namespace SL.Controllers
         [Route("getall/{idRestaurante}")]
         [HttpGet]
 
-        public IHttpActionResult GetAll(int? idRestaurante)
+        public IHttpActionResult GetAll(int idRestaurante)
         {
             if (idRestaurante == 0)
             {
                 idRestaurante = 0;
             }
 
-            ML.RestauranteReceta resultado = BL.RestauranteReceta.GetAll(idRestaurante.Value);
+            ML.RestauranteReceta resultado = BL.RestauranteReceta.GetAll(idRestaurante);
 
             if (resultado.Correct)
             {
