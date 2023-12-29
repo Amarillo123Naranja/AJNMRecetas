@@ -9,7 +9,7 @@ namespace BL
     public class RecetaIngrediente
     {
 
-        public static ML.RecetaIngrediente GetAll(int idReceta)
+        public static ML.RecetaIngrediente GetbyId(int idReceta)
         {
 
             ML.RecetaIngrediente resultado = new ML.RecetaIngrediente();
@@ -18,53 +18,50 @@ namespace BL
             {
                 using (DL.AJNMRecetasEntities context = new DL.AJNMRecetasEntities())
                 {
-                    var query = context.RecetaIngredientesGetAll(idReceta).ToList();
+                    var query = context.RecetaIngredientesGetAll(idReceta).SingleOrDefault();
 
-                    resultado.Objects = new List<Object>();
+                    resultado.Object = new List<Object>();
 
                     if (query != null)
                     {
-                        foreach (var registro in query)
-                        {
+                        
                             ML.RecetaIngrediente aux = new ML.RecetaIngrediente();
 
                             aux.Receta = new ML.Receta();
 
-                            aux.Receta.IdReceta = registro.IdReceta.Value;
+                            aux.Receta.IdReceta = query.IdReceta.Value;
 
                             aux.Ingrediente = new ML.Ingrediente();
 
-                            aux.Ingrediente.IdIngrediente = registro.IdIngrediente.Value;
+                            aux.Ingrediente.IdIngrediente = query.IdIngrediente.Value;
 
-                            aux.Receta.Nombre = registro.RecetaNombre;
+                            aux.Receta.Nombre = query.RecetaNombre;
 
-                            aux.Receta.Descripcion = registro.Descripcion;
+                            aux.Receta.Descripcion = query.Descripcion;
 
-                            aux.Receta.Imagen = registro.RecetaImagen;
+                            aux.Receta.Imagen = query.RecetaImagen;
 
-                            aux.Receta.Porcion = registro.Porcion.Value;
+                            aux.Receta.Porcion = query.Porcion.Value;
 
-                            aux.Ingrediente.Nombre = registro.IngredienteNombre;
+                            aux.Ingrediente.Nombre = query.IngredienteNombre;
 
-                            aux.Ingrediente.Imagen = registro.ImagenIngrediente;
+                            aux.Ingrediente.Imagen = query.ImagenIngrediente;
 
                             aux.Ingrediente.Pais = new ML.Pais();
 
-                            aux.Ingrediente.Pais.IdPais = registro.IdPais.Value;
+                            aux.Ingrediente.Pais.IdPais = query.IdPais.Value;
 
                             aux.Ingrediente.Categoria = new ML.Categoria();
 
-                            aux.Ingrediente.Categoria.IdCategoria = registro.IdCategoria.Value;
+                            aux.Ingrediente.Categoria.IdCategoria = query.IdCategoria.Value;
 
-                            aux.Ingrediente.Pais.Nombre = registro.NombrePais;
+                            aux.Ingrediente.Pais.Nombre = query.NombrePais;
 
-                            aux.Ingrediente.Categoria.Nombre = registro.NombreCategoria;
+                            aux.Ingrediente.Categoria.Nombre = query.NombreCategoria;
 
-                            resultado.Objects.Add(aux);
+                            resultado.Object = aux;
 
-                        }
-
-                        resultado.Correct = true;
+                            resultado.Correct = true;
 
                     }
 

@@ -8,7 +8,7 @@ namespace BL
 {
     public class RestauranteReceta
     {
-        public static ML.RestauranteReceta GetAll(int idRestaurante)
+        public static ML.RestauranteReceta GetbyId(int idRestaurante)
         {
             ML.RestauranteReceta resultado = new ML.RestauranteReceta(); 
             
@@ -17,50 +17,48 @@ namespace BL
                 using(DL.AJNMRecetasEntities context = new DL.AJNMRecetasEntities())
                 {
 
-                    var query = context.RestauranteRecetaGetAll(idRestaurante).ToList();
+                    var query = context.RestauranteRecetaGetAll(idRestaurante).SingleOrDefault();
 
-                    resultado.Objects = new List<object>();
+                    resultado.Object = new List<object>();
 
                     if(query != null)
                     {
-                        foreach (var registro in query)
-                        {
-                            ML.RestauranteReceta aux = new ML.RestauranteReceta();
+                          ML.RestauranteReceta aux = new ML.RestauranteReceta();
 
                             aux.Receta = new ML.Receta();
 
-                            aux.Receta.IdReceta = registro.IdReceta.Value;
+                            aux.Receta.IdReceta = query.IdReceta.Value;
 
                             aux.Restaurante = new ML.Restaurante();
 
-                            aux.Restaurante.IdRestaurante = registro.IdRestaurante.Value;
+                            aux.Restaurante.IdRestaurante = query.IdRestaurante.Value;
 
-                            aux.Receta.Descripcion = registro.Descripcion;
+                            aux.Receta.Descripcion = query.Descripcion;
 
-                            aux.Receta.Porcion = registro.Porcion.Value;
+                            aux.Receta.Porcion = query.Porcion.Value;
 
-                            aux.Receta.Imagen = registro.RecetaImagen;
+                            aux.Receta.Imagen = query.RecetaImagen;
 
                             aux.Restaurante.Pais = new ML.Pais();
 
-                            aux.Restaurante.Pais.IdPais = registro.IdPais.Value;
+                            aux.Restaurante.Pais.IdPais = query.IdPais.Value;
 
-                            aux.Restaurante.Pais.Nombre = registro.PaisNombre;
+                            aux.Restaurante.Pais.Nombre = query.PaisNombre;
 
-                            aux.Restaurante.Direccion = registro.Dirección;
+                            aux.Restaurante.Direccion = query.Dirección;
 
-                            aux.Restaurante.Imagen = registro.RecetaImagen;
+                            aux.Restaurante.Imagen = query.RecetaImagen;
 
-                            aux.Restaurante.Nombre = registro.RestauranteNombre;
+                            aux.Restaurante.Nombre = query.RestauranteNombre;
 
-                            aux.Restaurante.Calificacion = registro.Calificacion.Value;
+                            aux.Restaurante.Calificacion = query.Calificacion.Value;
 
-                            aux.Receta.Nombre = registro.NombreReceta;
+                            aux.Receta.Nombre = query.NombreReceta;
 
-                            resultado.Objects.Add(aux);
-                        }
+                            resultado.Object = aux;
+                        
+                            resultado.Correct = true;
 
-                        resultado.Correct = true;
                     }
 
                 }
@@ -76,14 +74,6 @@ namespace BL
 
 
         }
-
-
-
-
-
-
-
-
 
 
     }

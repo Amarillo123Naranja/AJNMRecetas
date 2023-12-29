@@ -10,16 +10,12 @@ namespace SL.Controllers
     [RoutePrefix("api/recetaingrediente")]  
     public class RecetaIngredienteController : ApiController
     {
-        [Route("getall/{idReceta}")]
+        [Route("getbyid/{idReceta}")]
         [HttpGet]
-        public IHttpActionResult GetAll(int idReceta)
+        public IHttpActionResult GetById(int idReceta)
         {
-            if(idReceta == 0)
-            {
-                idReceta = 0;
-            }
-
-            ML.RecetaIngrediente resultado = BL.RecetaIngrediente.GetAll(idReceta);
+            
+            ML.RecetaIngrediente resultado = BL.RecetaIngrediente.GetbyId(idReceta);
 
             if (resultado.Correct)
             {
