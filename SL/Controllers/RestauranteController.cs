@@ -10,10 +10,22 @@ namespace SL.Controllers
     [RoutePrefix("api/Restaurante")]
     public class RestauranteController : ApiController
     {
-        [Route("GetAll/{pais?}/{receta?}/{calificacion?}")]
+        [Route("")]
         [HttpGet]
-        public IHttpActionResult GetAll(string pais,string receta, int calificacion)
+        public IHttpActionResult GetAll(string pais,string receta, int? calificacion)
         {
+            if (pais==null)
+            {
+                pais = "";
+            }
+            if (receta == null)
+            {
+                receta = "";
+            }
+            if (calificacion==null)
+            {
+                calificacion = 0;
+            }
             List<object> lista = BL.Restaurante.GetAll(pais, receta, calificacion);
             if(lista != null) 
             {
@@ -25,7 +37,7 @@ namespace SL.Controllers
             }
         }
 
-        [Route("GetById/{IdRestaurante?}")]
+        [Route("GetById/{IdRestaurante}")]
         [HttpGet]
         public IHttpActionResult GetById(int IdRestaurante)
         {

@@ -11,7 +11,7 @@ namespace SL.Controllers
     public class RecetaController : ApiController
     {
         [HttpGet]
-        [Route]
+        [Route("")]
         public IHttpActionResult GetAll(string nombre, string pais)
         {
             if(nombre == null)
