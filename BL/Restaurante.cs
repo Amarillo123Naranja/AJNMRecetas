@@ -11,11 +11,11 @@ namespace BL
     {
         public static bool Add(ML.Restaurante restaurante)
         {
-            bool result;
+            bool result=new bool();
 
             using (DL.AJNMRecetasEntities context = new DL.AJNMRecetasEntities())
             {
-                int rowAffeted = context.RestauranteAdd(
+                var rowAffeted = context.RestauranteAdd(
                     restaurante.Nombre,
                     restaurante.Imagen,
                     restaurante.Direccion,
@@ -38,11 +38,11 @@ namespace BL
 
         public static bool Update(ML.Restaurante restaurante)
         {
-            bool result;
+            bool result=new bool();
 
             using (DL.AJNMRecetasEntities context =  new DL.AJNMRecetasEntities())
             {
-                int rowAffected = context.RestauranteUpdate(
+                var rowAffected = context.RestauranteUpdate(
                     restaurante.IdRestaurante,
                     restaurante.Nombre,
                     restaurante.Imagen,
@@ -65,7 +65,7 @@ namespace BL
 
         public static bool Delete(int IdRestaurente)
         {
-            bool result;
+            bool result=new bool();
 
             using (DL.AJNMRecetasEntities context =  new DL.AJNMRecetasEntities())
             {
@@ -85,7 +85,7 @@ namespace BL
 
         public static object GetbyId(int IdRestaurante)
         {
-            object result = null;
+            object result = new object();
 
             using (DL.AJNMRecetasEntities context = new DL.AJNMRecetasEntities())
             {
@@ -94,6 +94,7 @@ namespace BL
                 if(query != null)
                 {
                     ML.Restaurante restaurante = new ML.Restaurante();
+                    restaurante.Pais = new ML.Pais();
 
                     restaurante.IdRestaurante = query.IdRestaurante;
                     restaurante.Nombre = query.Nombre;
@@ -111,7 +112,7 @@ namespace BL
 
         public static List<object> GetAll(string pais, string receta,int? calificacion)
         {
-            var result = new List<object>();
+            List<object> result = new List<object>();
 
             using (DL.AJNMRecetasEntities context = new DL.AJNMRecetasEntities())
             {
@@ -122,6 +123,9 @@ namespace BL
                     foreach (var item in query)
                     {
                         ML.Restaurante restaurante = new ML.Restaurante();
+                        restaurante.Receta = new ML.Receta();
+                        restaurante.Pais=new ML.Pais();
+
 
                         restaurante.IdRestaurante = (int)item.IdRestaurante;
                         restaurante.Receta.IdReceta = (int)item.IdReceta;
