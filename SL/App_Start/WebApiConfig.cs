@@ -9,6 +9,7 @@ namespace SL
     {
         public static void Register(HttpConfiguration config)
         {
+            config.EnableCors();
             // Configuración y servicios de Web API
 
             // Rutas de Web API
